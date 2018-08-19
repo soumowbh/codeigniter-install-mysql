@@ -1,63 +1,107 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>Codeigniter Install Mysql Database</title>
-
-	<!-- VENDOR COMPONENTS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">	
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <?php $this->load->view('includes/meta'); ?>
+	<script type="text/javascript">
+    AppHelper = {};
+    AppHelper.baseUrl = "<?php echo base_url(); ?>";
+    AppHelper.assetsDirectory = "<?php echo base_url("assets") . "/"; ?>";
+    AppHelper.settings = {};
+    AppHelper.all = "<?php echo lang("all"); ?>";
+</script>
+	<?php
+    load_css(array(
+        "assets/bootstrap/css/bootstrap.min.css",
+        "assets/js/font-awesome/css/font-awesome.min.css",
+        "assets/js/datatable/css/jquery.dataTables.min.css",
+        "assets/js/datatable/TableTools/css/dataTables.tableTools.min.css",
+        "assets/js/select2/select2.css",
+        "assets/js/select2/select2-bootstrap.min.css",
+        "assets/js/bootstrap-datepicker/css/datepicker3.css",
+        "assets/js/bootstrap-timepicker/css/bootstrap-timepicker.min.css",
+        "assets/js/x-editable/css/bootstrap-editable.css",
+        "assets/js/dropzone/dropzone.min.css",
+        "assets/js/magnific-popup/magnific-popup.css",
+        "assets/css/font.css",
+        "assets/css/style.css",
+        "assets/css/custom-style.css",
+        "assets/js/jquery-internationalphone/css/intlTelInput.css",
+    ));
+    load_js(array(
+        "assets/js/jquery-1.11.3.min.js",
+        "assets/bootstrap/js/bootstrap.min.js",
+        "assets/js/jquery-validation/jquery.validate.min.js",
+        "assets/js/jquery-validation/jquery.form.js",
+        "assets/js/slimscroll/jquery.slimscroll.min.js",
+        "assets/js/datatable/js/jquery.dataTables.min.js",
+        "assets/js/select2/select2.js",
+        "assets/js/datatable/TableTools/js/dataTables.tableTools.min.js",
+        "assets/js/bootstrap-datepicker/js/bootstrap-datepicker.js",
+        "assets/js/bootstrap-timepicker/js/bootstrap-timepicker.min.js",
+        "assets/js/x-editable/js/bootstrap-editable.min.js",
+        "assets/js/fullcalendar/moment.min.js",
+        "assets/js/dropzone/dropzone.min.js",
+        "assets/js/magnific-popup/jquery.magnific-popup.min.js",
+        "assets/js/notificatoin_handler.js",
+        "assets/js/general_helper.js",
+        "assets/js/app.js",
+        "assets/js/jquery-internationalphone/js/utils.js",
+        "assets/js/jquery-internationalphone/js/intlTelInput.js"
+    ));
+    ?>
+    <script>function redirect() {
+        <?php if(check_database()){ ?>
+        window.location.replace("<?php echo base_url();?>");
+        <?php } ?>  
+        }
+    </script>
 	</head>
-<body>
-	<div class="container" style="background:#Fff">
-        <h1  align="center"><span class="btn-success" style="padding:0 10px;font-size:46px;">X</span> Install </h1>
-        <h4  align="center"><i class="fa fa-lock"></i> Instalar automático Xmanager</h4>
-        <hr/>
-            <form class="form-signin" action="<?php echo base_url();?>xinstall/exec" method="post" id="logar"> 
-            
-            <div class="col-sm-6" style="font-size:16px;">
-            
-               <div class="col-xs-4 " style="text-align:right;line-height:30px">
-            	Hostname</div>
-	            	<div class="col-xs-8"> 
-	            		<input type="text" name="hostname" class="form-control" placeholder="default:'localhost'">
-	            	</div>
-            	<div class="col-xs-4 " style="text-align:right;line-height:30px">
-            	Database</div>
-	            	<div class="col-xs-8"> 
-	            		<input type="text" name="database" class="form-control" placeholder="database_name">
-	            	</div>
-	            <div class="col-xs-4 " style="text-align:right;line-height:30px">
-            	Username</div>
-	            	<div class="col-xs-8"> 
-	            		<input type="text" name="username" class="form-control" placeholder="database_username">
-	            	</div>
-	            <div class="col-xs-4 " style="text-align:right;line-height:30px">
-	            Password</div>
-	            	<div class="col-xs-8"> 
-	            		<input type="text" name="password" class="form-control" placeholder="database_password">
-	            	</div>	
-	           <div class="col-xs-4 " style="text-align:right;line-height:30px">
-	            Force OverWrite </div>
-	            	<div class="col-xs-8"> 
-	            		<input type="checkbox" name="force" > Yes
-	            	</div>
-	            	<div style="clear:both"></div>
-	            <div class="col-xs-4 " style="text-align:right;line-height:30px">
-	            Dummy Data </div>
-	            	<div class="col-xs-8"> 
-	            		<input type="checkbox" name="dummy" > Yes
-	            	</div>
-			</div>  
-            <div class="col-sm-6">
-            	<div class="col-xs-4"></div>
-            	<div class="col-xs-8"></div>
+	<body onLoad="redirect()">
+<div id="page-content" class="clearfix" >
+    <div class="scrollable-page">
+        <div class="signin-box">
+            <div class="panel panel-default clearfix" style="padding-top:20px">
+                <div style="text-align:center">
+                    <img src="<?php echo base_url("/files/system/_file59b68d56ebdad-site-logo.png") ?>" alt="Mind.Engineering"><hr>
+                </div>
+                <div class="panel-heading text-center">
+                    <h2 class="form-signin-heading"><?php echo lang('install_title'); ?></h2>
+                    <p><?php echo $install_message; ?></p>
+                </div>
+                <div class="panel-body">
+					<?php echo form_open("exec", array("id" => "install-form", "class" => "general-form", "role" => "form")); ?>
+					<input type="hidden" name="load" value="1" />
+                    <div class="form-group">
+                        <div class=" col-md-12">
+                            <button class="btn btn-lg btn-primary btn-block" type="submit"><?php echo lang('install'); ?></button>
+                        </div>
+                    </div>
+                </div>
+				<?php echo form_close(); ?>
             </div>
-            <div style="clear:both"></div>
-              <br/>
-                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit"  >Instalar</button>
-            </form>           
-         <p align="center"> Desenvolvido por: <b>joelferreira.eu</b> </p>
-    </div><!-- /container -->   
-
+        </div>
+    </div>
+</div> <!-- /container -->
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#install-form").appForm({
+            isModal: false,
+            onSubmit: function() {
+                appLoader.show();
+            },
+            onSuccess: function(result) {
+                appLoader.hide();
+                appAlert.success(result.message, {container: '.panel-body', animate: false});
+                $("#install-form").remove();
+                window.location.replace("<?php echo base_url();?>");
+            },
+            onError: function(result) {
+                appLoader.hide();
+                appAlert.error(result.message, {container: '.panel-body', animate: false});
+                return false;
+            }
+        });
+    });
+</script>
 </body>
 </html>
